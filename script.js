@@ -43,4 +43,19 @@ $(function () {
   location.reload();
 }
 
+
+$(".saveBtn").on("click", function () {
+  var block = $(this).parent().attr("id");
+  var task = $(this).siblings(".description").val().trim();
+  localStorage.setItem(block, task);
+});
+
+
+$(function () {
+  $(".time-block").each(function () {
+    var block = $(this).attr("id");
+    $(this).children(".description").val(localStorage.getItem(block));
+  });
+});
+
 });
