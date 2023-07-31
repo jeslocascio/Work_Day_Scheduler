@@ -8,6 +8,8 @@ $(function () {
   // function? How can DOM traversal be used to get the "hour-x" id of the
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
+
+
   //
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
@@ -20,4 +22,34 @@ $(function () {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
+
+  var clock = setInterval(function() {
+    let today = dayjs();
+    let time = today.format("[It is] dddd, MMMM D, YYYY, [at] hh:mm:ss A[!]");
+    $("#currentDay").text(time);
+  });
+
+  clock;
+
+ var d = new Date(); // get current date
+ var hour = d.getHours(); // get current hour
+ 
+  
+  if (hour < 12)
+    console.log("It's before noon!");
+  else if (hour < 16)
+    console.log("It's early afternoon!");
+  else if (hour < 24)
+    console.log("It's evening!");
+    
+
+  //add 12 to time after 12
+
+  // if [Hour block] > [CurrentTime]
+  //  add Past class
+  // remove Present and Future Class
+  // if [Hour block] = [CurrentTime]
+  // add Present class
+  // remove Past and Future class
+
 });
