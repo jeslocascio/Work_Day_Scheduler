@@ -29,11 +29,12 @@ $(function () {
   };
   setHourColors();
 
-
  var d = new Date();
  var minute = d.getMinutes();
- if (minute !== 0) {
-  var timeToRefresh = (60 - minute) * 60000;
+ var second = d.getSeconds();
+
+ if (minute !== 0 || second !== 0) {
+  var timeToRefresh = (60 - minute) * 60000 + (60 - second) * 1000;
   setTimeout(function () {
     location.reload();
   }, timeToRefresh);
