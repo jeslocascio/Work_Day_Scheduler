@@ -1,55 +1,45 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
 $(function () {
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
 
-
-  //
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  //
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
-  // TODO: Add code to display the current date in the header of the page.
-
-  var clock = setInterval(function() {
-    let today = dayjs();
-    let time = today.format("[It is] dddd, MMMM D, YYYY, [at] hh:mm:ss A[!]");
-    $("#currentDay").text(time);
+  setInterval(function() {
+    var today = dayjs();
+    var currentTime = today.format("[It is] dddd, MMMM D, YYYY, [at] hh:mm:ss A[!]");
+    $("#currentDay").text(currentTime);
   });
 
-  clock;
+  var setHourColors = function () {
+    var currentHour = dayjs().hour();
+    console.log(currentHour);
+    var timeSlots = $('[id^="hour-"]');
+    timeSlots.each(function () {
+      var id = $(this).attr("id");
+      console.log(id);
+      var hourBlock = id.split("-")[1];
+      console.log(hourBlock);
 
- var d = new Date(); // get current date
- var hour = d.getHours(); // get current hour
- 
+      if (parseInt(hourBlock) > currentHour) {
+        $(this).addClass("future").removeClass("past present");
+      } else if (parseInt(hourBlock) < currentHour) {
+        $(this).addClass("past").removeClass("future present");
+      } else if (parseInt(hourBlock) === currentHour) {
+        $(this).addClass("present").removeClass("past future");
   
-  if (hour < 12)
-    console.log("It's before noon!");
-  else if (hour < 16)
-    console.log("It's early afternoon!");
-  else if (hour < 24)
-    console.log("It's evening!");
-    
+      }
+      
+    });
+  };
+  setHourColors();
 
-  //add 12 to time after 12
 
-  // if [Hour block] > [CurrentTime]
-  //  add Past class
-  // remove Present and Future Class
-  // if [Hour block] = [CurrentTime]
-  // add Present class
-  // remove Past and Future class
+ var d = new Date();
+ var minute = d.getMinutes();
+ if (minute !== 0) {
+  var timeToRefresh = (60 - minute) * 60000;
+  setTimeout(function () {
+    location.reload();
+  }, timeToRefresh);
+} else {
+  console.log("Time to refresh!");
+  location.reload();
+}
 
 });
